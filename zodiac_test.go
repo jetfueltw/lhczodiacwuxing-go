@@ -14,20 +14,32 @@ func TestGetZodiacNumbers(t *testing.T) {
 	if !assert.NoError(err) {
 		return
 	}
+
 	assert.Equal(map[string][]int{
-		"rat":     []int{1, 13, 25, 37, 49},
-		"ox":      []int{12, 24, 36, 48},
-		"tiger":   []int{11, 23, 35, 47},
-		"rabbit":  []int{10, 22, 34, 46},
-		"dragon":  []int{9, 21, 33, 45},
-		"snake":   []int{8, 20, 32, 44},
-		"horse":   []int{7, 19, 31, 43},
-		"goat":    []int{6, 18, 30, 42},
-		"monkey":  []int{5, 17, 29, 41},
-		"rooster": []int{4, 16, 28, 40},
-		"dog":     []int{3, 15, 27, 39},
-		"pig":     []int{2, 14, 26, 38},
+		"rat":     {1, 13, 25, 37, 49},
+		"ox":      {12, 24, 36, 48},
+		"tiger":   {11, 23, 35, 47},
+		"rabbit":  {10, 22, 34, 46},
+		"dragon":  {9, 21, 33, 45},
+		"snake":   {8, 20, 32, 44},
+		"horse":   {7, 19, 31, 43},
+		"goat":    {6, 18, 30, 42},
+		"monkey":  {5, 17, 29, 41},
+		"rooster": {4, 16, 28, 40},
+		"dog":     {3, 15, 27, 39},
+		"pig":     {2, 14, 26, 38},
 	}, zodiacNumbers)
+}
+
+func TestGetZodiacNumber(t *testing.T) {
+	assert := assert.New(t)
+
+	zodiacNumber, err := lhczodiacwuxing.GetZodiacNumber(2020, "rat")
+	if !assert.NoError(err) {
+		return
+	}
+
+	assert.Equal([]int{1, 13, 25, 37, 49}, zodiacNumber)
 }
 
 func TestGetNumberZodiacs(t *testing.T) {
@@ -37,6 +49,7 @@ func TestGetNumberZodiacs(t *testing.T) {
 	if !assert.NoError(err) {
 		return
 	}
+
 	assert.Equal(map[int]string{
 		1:  "rat",
 		2:  "pig",
@@ -90,10 +103,21 @@ func TestGetNumberZodiacs(t *testing.T) {
 	}, numberZodiacs)
 }
 
+func TestGetNumberZodiac(t *testing.T) {
+	assert := assert.New(t)
+
+	numberZodiac, err := lhczodiacwuxing.GetNumberZodiac(2020, 1)
+	if !assert.NoError(err) {
+		return
+	}
+
+	assert.Equal("rat", numberZodiac)
+}
+
 func TestGetDutyZodiac(t *testing.T) {
 	assert := assert.New(t)
 
-	testcases := map[int]string{
+	cases := map[int]string{
 		2020: "rat",
 		2021: "ox",
 		2022: "tiger",
@@ -103,11 +127,12 @@ func TestGetDutyZodiac(t *testing.T) {
 		2035: "rabbit",
 		2036: "dragon",
 	}
-	for year, zodiac := range testcases {
+	for year, zodiac := range cases {
 		dutyZodiac, err := lhczodiacwuxing.GetDutyZodiac(year)
 		if !assert.NoError(err) {
 			return
 		}
+
 		assert.Equal(zodiac, dutyZodiac)
 	}
 }

@@ -14,13 +14,25 @@ func TestGetWuxingNumbers(t *testing.T) {
 	if !assert.NoError(err) {
 		return
 	}
+
 	assert.Equal(map[string][]int{
-		"metal": []int{6, 7, 20, 21, 28, 29, 36, 37},
-		"wood":  []int{2, 3, 10, 11, 18, 19, 32, 33, 40, 41, 48, 49},
-		"water": []int{8, 9, 16, 17, 24, 25, 38, 39, 46, 47},
-		"fire":  []int{4, 5, 12, 13, 26, 27, 34, 35, 42, 43},
-		"earth": []int{1, 14, 15, 22, 23, 30, 31, 44, 45},
+		"metal": {6, 7, 20, 21, 28, 29, 36, 37},
+		"wood":  {2, 3, 10, 11, 18, 19, 32, 33, 40, 41, 48, 49},
+		"water": {8, 9, 16, 17, 24, 25, 38, 39, 46, 47},
+		"fire":  {4, 5, 12, 13, 26, 27, 34, 35, 42, 43},
+		"earth": {1, 14, 15, 22, 23, 30, 31, 44, 45},
 	}, wuxingNumbers)
+}
+
+func TestGetWuxingNumber(t *testing.T) {
+	assert := assert.New(t)
+
+	wuxingNumber, err := lhczodiacwuxing.GetWuxingNumber(2020, "metal")
+	if !assert.NoError(err) {
+		return
+	}
+
+	assert.Equal([]int{6, 7, 20, 21, 28, 29, 36, 37}, wuxingNumber)
 }
 
 func TestGetNumberWuxings(t *testing.T) {
@@ -30,6 +42,7 @@ func TestGetNumberWuxings(t *testing.T) {
 	if !assert.NoError(err) {
 		return
 	}
+
 	assert.Equal(map[int]string{
 		1:  "earth",
 		2:  "wood",
@@ -81,4 +94,15 @@ func TestGetNumberWuxings(t *testing.T) {
 		48: "wood",
 		49: "wood",
 	}, numberWuxings)
+}
+
+func TestGetNumberWuxing(t *testing.T) {
+	assert := assert.New(t)
+
+	numberWuxing, err := lhczodiacwuxing.GetNumberWuxing(2020, 1)
+	if !assert.NoError(err) {
+		return
+	}
+
+	assert.Equal("earth", numberWuxing)
 }
